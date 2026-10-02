@@ -3,7 +3,7 @@
 **Alumnos:** Candiotto Gino, Joaquin Sverko, Genaro Correa, Facundo Angelelli  
 **Fecha:** 10 de octubre  
 **Tema:** Instalación del sistema operativo y configuración de SSH  
-
+!
 ---
 
 ## 1. INTRODUCCIÓN
@@ -17,7 +17,7 @@ Para esta práctica se utilizó **Raspberry Pi OS Lite (64-bit)**, una versión 
 ---
 
 ## 2. ¿QUÉ ES UNA RASPBERRY PI?
-
+!(/imagenes/logo.png)
 Una Raspberry Pi es una computadora de pequeñas dimensiones desarrollada originalmente por la *Raspberry Pi Foundation*. A pesar de su tamaño reducido, posee los componentes necesarios para ejecutar un sistema operativo y realizar numerosas tareas informáticas.
 
 Dependiendo del modelo, una Raspberry Pi puede disponer de:

@@ -432,3 +432,8 @@ Se seleccionó **Raspberry Pi OS Lite (64-bit)** debido a que la consigna requie
 Además, se configuró el servicio **SSH**, que permite acceder remotamente a la Raspberry Pi desde otra computadora dentro de la red. Gracias a este protocolo, es posible administrar el servidor sin necesidad de utilizar un monitor, teclado o mouse conectados directamente a la Raspberry.
 
 De esta manera, la Raspberry Pi queda preparada para las siguientes etapas del proyecto, en las cuales podrá utilizarse como servidor para implementar diferentes servicios dentro de la red local.
+## 25 IMAGENES
+![instalacion del OS ](imagenes/image.png)
+![Configuración de Raspberry Pi](imagenes/config.png)
+![Configuración de Raspberry Pi](imagenes/raspi.png)
+![Verificacion del estado](imagenes/status.png)

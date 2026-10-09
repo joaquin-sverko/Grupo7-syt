@@ -219,8 +219,64 @@ xclock
 Estas aplicaciones sirven para comprobar la redirección gráfica, no para instalar un entorno de escritorio completo.
 
 ---
+## 11. VISUALIZACIÓN DE APLICACIONES GRÁFICAS EN EL MONITOR DE LA RASPBERRY PI
 
-## 11. COMANDOS UTILIZADOS
+Además de mostrar aplicaciones gráficas en la computadora cliente mediante SSH, también es posible ejecutar aplicaciones gráficas directamente en el monitor conectado a la Raspberry Pi.
+
+Para realizar esto, se preparó una sesión gráfica local utilizando Xorg, sin instalar un gestor de ventanas ni un entorno de escritorio completo.
+
+### 11.1. Comprobar la variable DISPLAY
+
+Primero se comprobó el valor de la variable de entorno `DISPLAY` mediante el siguiente comando:
+
+```bash
+echo $DISPLAY
+```
+
+El comando no devolvió ningún valor, lo que indicó que la terminal utilizada no tenía configurado un destino gráfico mediante esa variable.
+
+### 11.2. Instalar las herramientas necesarias
+
+Para disponer de las herramientas necesarias para iniciar una sesión gráfica X, se ejecutaron los siguientes comandos:
+
+```bash
+sudo apt update
+sudo apt install xinit x11-xserver-utils
+```
+
+* **`xinit`:** permite iniciar una sesión del sistema gráfico X.
+* **`x11-xserver-utils`:** incluye herramientas auxiliares para trabajar con X11.
+
+Estos paquetes permitieron preparar el inicio de una sesión gráfica mínima, manteniendo el objetivo de no instalar un entorno de escritorio completo.
+
+### 11.3. Ejecutar xclock en el monitor
+
+Una vez instaladas las herramientas, se utilizó el siguiente comando para iniciar la aplicación gráfica `xclock` en la pantalla local:
+
+```bash
+startx /usr/bin/xclock -- :0
+```
+
+En este comando, `/usr/bin/xclock` indica la ubicación de la aplicación y `:0` identifica la pantalla X local que se desea utilizar.
+
+Mediante este procedimiento se buscó iniciar Xorg y ejecutar la aplicación gráfica directamente en el monitor conectado a la Raspberry Pi, sin necesidad de utilizar la redirección gráfica de SSH.
+
+### 11.4. Resultado de la prueba
+
+La prueba permitió comprobar el procedimiento de inicio de una aplicación gráfica local mediante Xorg. La aplicación `xclock` se utiliza para visualizar un reloj en una ventana gráfica y verificar el funcionamiento del sistema X11.
+
+De esta manera, se diferencia la ejecución gráfica local de la redirección X11 mediante SSH, en la cual la ventana aparece en la computadora cliente.
+
+### 11.5. Diferencia entre la visualización local y la redirección SSH
+
+Existen dos modalidades para mostrar aplicaciones gráficas:
+
+* **Mediante SSH con X11 Forwarding:** la aplicación se ejecuta en la Raspberry Pi, pero la ventana se muestra en la computadora cliente. En nuestras pruebas se utilizó `ssh -Y`.
+* **Mediante una sesión Xorg local:** la aplicación se ejecuta en la Raspberry Pi y su ventana se muestra en el monitor conectado directamente a ella.
+
+Ambas modalidades permiten trabajar con aplicaciones gráficas, pero utilizan diferentes destinos de visualización.
+
+## 12. COMANDOS UTILIZADOS
 
 ### Actualizar la información de paquetes
 
@@ -288,7 +344,7 @@ Abre una ventana con un reloj.
 
 ---
 
-## 12. RESULTADO FINAL
+## 13. RESULTADO FINAL
 
 Al finalizar la práctica se configuró la Raspberry Pi para permitir la ejecución de aplicaciones gráficas mediante una conexión SSH con X11 Forwarding.
 
@@ -306,7 +362,7 @@ De esta forma, se pudo utilizar una aplicación gráfica ejecutada en la Raspber
 
 ---
 
-## 13. CONCLUSIÓN
+## 14. CONCLUSIÓN
 
 En esta segunda entrega se continuó el trabajo iniciado con la instalación de Raspberry Pi OS Lite y la configuración de SSH. El objetivo fue incorporar los componentes necesarios para ejecutar aplicaciones gráficas de manera remota, manteniendo una instalación mínima y sin instalar un entorno de escritorio ni un gestor de ventanas.
 
@@ -315,3 +371,4 @@ Para lograrlo, se instalaron Xorg, `xauth` y las aplicaciones de prueba de X11. 
 La conexión se realizó desde una computadora con Linux. Aunque la opción `-X` no funcionó en nuestras pruebas, la opción `-Y` permitió ejecutar la aplicación gráfica y mostrar su ventana en el equipo cliente.
 
 Esta práctica permitió comprender la diferencia entre disponer de un servidor gráfico, instalar un entorno de escritorio y redirigir una aplicación gráfica a través de SSH. Como resultado, la Raspberry Pi puede seguir utilizándose como servidor sin necesidad de contar con un escritorio completo para realizar esta prueba.
+

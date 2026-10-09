@@ -61,7 +61,7 @@ En nuestro caso, la Raspberry Pi funciona como servidor remoto y la computadora 
 
 ### Esquema de funcionamiento
 
-```text
+
 COMPUTADORA CLIENTE CON LINUX
           |
           | Conexión SSH con X11 Forwarding
@@ -79,7 +79,6 @@ La ventana se muestra en la computadora cliente
 ```
 
 ---
-
 ## 5. DIFERENCIA ENTRE XORG Y X11 FORWARDING
 
 Aunque ambos conceptos están relacionados con las aplicaciones gráficas, no cumplen la misma función.
@@ -315,7 +314,7 @@ Reinicia el servicio para aplicar la configuración modificada.
 ```bash
 ssh -Y usuario@IP_DE_LA_RASPBERRY
 ```
-
+![ssh-y](imagenes/ssh-y.png)
 Establece una sesión SSH con reenvío X11 de confianza extendida.
 
 ### Consultar la variable DISPLAY
@@ -331,7 +330,7 @@ Permite comprobar el destino gráfico configurado para la sesión remota.
 ```bash
 xeyes
 ```
-
+ ![los ojos](imagenes/xeyes.png.png)
 Abre una aplicación X11 sencilla para verificar el reenvío gráfico.
 
 Como alternativa:
@@ -339,6 +338,7 @@ Como alternativa:
 ```bash
 xclock
 ```
+![reloj](imagenes/xclock.png)
 
 Abre una ventana con un reloj.
 

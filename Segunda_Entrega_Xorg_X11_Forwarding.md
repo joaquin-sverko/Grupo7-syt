@@ -330,7 +330,7 @@ Permite comprobar el destino gráfico configurado para la sesión remota.
 ```bash
 xeyes
 ```
- ![ojos](imagenes/xeyes.png.png)
+ ![ojos](imagenes/xeyes.png)
 Abre una aplicación X11 sencilla para verificar el reenvío gráfico.
 
 Como alternativa:

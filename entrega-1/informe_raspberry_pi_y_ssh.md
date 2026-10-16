@@ -1,4 +1,3 @@
-
 # PRIMERA ENTREGA - RASPBERRY PI Y SSH
 
 **Alumnos:** Candiotto Gino, Joaquin Sverko, Genaro Correa, Facundo Angelelli
@@ -114,12 +113,14 @@ Sintaxis general:
 
 ```bash
 ssh usuario@direccion_ip
+
 ```
 
 Si la Raspberry Pi tiene la dirección IP `192.168.60.211` y el usuario es `grupo7`, la conexión puede realizarse mediante:
 
 ```bash
 ssh grupo7@192.168.60.211
+
 ```
 
 ## 8. ¿PARA QUÉ SIRVE SSH?
@@ -161,6 +162,7 @@ PC con Windows (Cliente)
       | SSH (Puerto TCP 22)
       v
 Raspberry Pi (Servidor)
+
 ```
 
 ## 11. DIRECCIÓN IP
@@ -194,6 +196,8 @@ Primero se abrió Raspberry Pi Imager en una computadora con Windows. La tarjeta
 ### 13.2. Seleccionar el Dispositivo
 
 Dentro de Raspberry Pi Imager se seleccionó el modelo correspondiente de Raspberry Pi (Raspberry Pi 3). Esta selección permite que el programa prepare correctamente la instalación para el dispositivo utilizado.
+
+![Pantalla de selección de dispositivo en Raspberry Pi Imager](image.png)
 
 ### 13.3. Seleccionar el Sistema Operativo
 
@@ -237,9 +241,16 @@ Adicionalmente, dentro del sistema operativo es posible gestionar y verificar es
 
 ```bash
 sudo raspi-config
+
 ```
 
-Al ejecutar este comando se accede al menú `3 Interface Options` y posteriormente a `I1 SSH`, donde se confirma la activación del servicio.
+Al ejecutar este comando se muestra el menú principal de la herramienta de configuración:
+
+![Menú principal de raspi-config](raspi.png)
+
+Desde allí se accede al menú `3 Interface Options` y posteriormente a `I1 SSH`, donde se confirma la activación del servicio.
+
+![Menú Interface Options de raspi-config con la opción I1 SSH](config.png)
 
 ## 16. GRABACIÓN DE LA MICROSD
 
@@ -276,6 +287,7 @@ Desde la propia terminal de la Raspberry Pi, se pueden ejecutar los siguientes c
 
 ```bash
 hostname -i
+
 ```
 
 - **`hostname`:** Programa de Linux que muestra o establece el nombre de red del equipo.
@@ -285,6 +297,7 @@ hostname -i
 
 ```bash
 hostname -I
+
 ```
 
 - **`hostname`:** Comando principal.
@@ -294,6 +307,7 @@ También se puede buscar la IP desde una PC cliente en Windows ejecutando:
 
 ```powershell
 ping servidor-rpi.local
+
 ```
 
 - **`ping`:** Utilidad de red que envía paquetes ICMP para verificar si un equipo está accesible.
@@ -305,6 +319,7 @@ Una vez conocida la dirección IP, se abrió la consola (PowerShell o CMD) en la
 
 ```bash
 ssh grupo7@192.168.60.211
+
 ```
 
 ### Desglose detallado del comando:
@@ -322,6 +337,7 @@ Para continuar se debe escribir:
 
 ```text
 yes
+
 ```
 
 Esto almacena la clave en el archivo `known_hosts` de la computadora cliente.
@@ -336,7 +352,10 @@ Una vez iniciada la sesión remota en la Raspberry Pi, se verificó que el demon
 
 ```bash
 sudo systemctl status ssh
+
 ```
+
+![Resultado del comando sudo systemctl status ssh](status.png)
 
 ### Desglose detallado del comando:
 
@@ -361,6 +380,7 @@ A continuación se detalla cada comando ejecutado en la terminal durante la prá
 
 ```bash
 cat /etc/os-release
+
 ```
 
 - **`cat`:** (*Concatenate*) Comando utilizado para leer y desplegar el contenido completo de un archivo de texto en la consola.
@@ -370,6 +390,7 @@ cat /etc/os-release
 
 ```bash
 hostname
+
 ```
 
 - **`hostname`:** Muestra en pantalla el nombre asignado al equipo en la red (ejemplo: `servidor-rpi` o `grupo7`).
@@ -378,6 +399,7 @@ hostname
 
 ```bash
 hostname -I
+
 ```
 
 - **`hostname`:** Comando para gestionar nombres e IPs del equipo.
@@ -387,6 +409,7 @@ hostname -I
 
 ```bash
 sudo systemctl status ssh
+
 ```
 
 - **`sudo`:** Ejecuta el comando con permisos de administrador (root).
@@ -398,6 +421,7 @@ sudo systemctl status ssh
 
 ```bash
 sudo apt update
+
 ```
 
 - **`sudo`:** Ejecuta con permisos del superusuario root.
@@ -408,6 +432,7 @@ sudo apt update
 
 ```bash
 sudo apt upgrade -y
+
 ```
 
 - **`sudo`:** Privilegios de administrador.
@@ -419,6 +444,7 @@ sudo apt upgrade -y
 
 ```powershell
 ssh grupo7@192.168.60.211
+
 ```
 
 - **`ssh`:** Cliente del protocolo SSH.
@@ -452,6 +478,7 @@ RASPBERRY PI (Servidor - IP 192.168.60.211)
       | Raspberry Pi OS Lite (Sin GUI)
       v
 SERVICIOS DE RED LOCAL
+
 ```
 
 ## 24. CONCLUSIÓN

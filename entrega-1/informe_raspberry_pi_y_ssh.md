@@ -197,7 +197,7 @@ Primero se abrió Raspberry Pi Imager en una computadora con Windows. La tarjeta
 
 Dentro de Raspberry Pi Imager se seleccionó el modelo correspondiente de Raspberry Pi (Raspberry Pi 3). Esta selección permite que el programa prepare correctamente la instalación para el dispositivo utilizado.
 
-![Pantalla de selección de dispositivo en Raspberry Pi Imager](image.png)
+![Pantalla de selección de dispositivo en Raspberry Pi Imager](imagenes/image.png)
 
 ### 13.3. Seleccionar el Sistema Operativo
 
@@ -246,11 +246,11 @@ sudo raspi-config
 
 Al ejecutar este comando se muestra el menú principal de la herramienta de configuración:
 
-![Menú principal de raspi-config](raspi.png)
+![Menú principal de raspi-config](imagenes/raspi.png)
 
 Desde allí se accede al menú `3 Interface Options` y posteriormente a `I1 SSH`, donde se confirma la activación del servicio.
 
-![Menú Interface Options de raspi-config con la opción I1 SSH](config.png)
+![Menú Interface Options de raspi-config con la opción I1 SSH](imagenes/config.png)
 
 ## 16. GRABACIÓN DE LA MICROSD
 
@@ -355,7 +355,7 @@ sudo systemctl status ssh
 
 ```
 
-![Resultado del comando sudo systemctl status ssh](status.png)
+![Resultado del comando sudo systemctl status ssh](imagenes/status.png)
 
 ### Desglose detallado del comando:
 

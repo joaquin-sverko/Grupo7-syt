@@ -1,10 +1,10 @@
 # SEGUNDA ENTREGA - XORG Y REDIRECCIÓN GRÁFICA MEDIANTE SSH
 
-**Alumnos:** Candiotto Gino, Joaquin Sverko, Genaro Correa, Facundo Angelelli  
-**Fecha:** 10 de octubre  
-**Tema:** Instalación de Xorg y configuración de X11 Forwarding mediante SSH
+**Alumnos:** Candiotto Gino, Joaquin Sverko, Genaro Correa, Facundo Angelelli
 
----
+**Fecha:** 10 de octubre
+
+**Tema:** Instalación de Xorg y configuración de X11 Forwarding mediante SSH
 
 ## 1. INTRODUCCIÓN
 
@@ -16,8 +16,6 @@ Esta configuración permite ejecutar una aplicación en la Raspberry Pi y visual
 
 Para realizar la práctica se trabajó con Linux como sistema cliente y se utilizó una conexión SSH con la opción `-Y`, ya que fue la modalidad que permitió ejecutar correctamente la aplicación gráfica de prueba.
 
----
-
 ## 2. OBJETIVOS DE LA PRÁCTICA
 
 Los objetivos principales de esta entrega fueron:
@@ -27,8 +25,6 @@ Los objetivos principales de esta entrega fueron:
 - Configurar el servicio SSH para permitir la redirección gráfica mediante X11 Forwarding.
 - Conectarse desde una computadora con Linux a la Raspberry Pi.
 - Comprobar que una aplicación gráfica ejecutada en la Raspberry Pi se visualice en la computadora cliente.
-
----
 
 ## 3. ¿QUÉ ES XORG?
 
@@ -47,8 +43,6 @@ Es importante distinguir los siguientes componentes:
 
 Por lo tanto, instalar Xorg no significa instalar automáticamente un escritorio completo.
 
----
-
 ## 4. ¿QUÉ ES X11 FORWARDING?
 
 **X11 Forwarding** es una función de SSH que permite redirigir la comunicación gráfica de una aplicación remota hacia la computadora cliente.
@@ -61,7 +55,7 @@ En nuestro caso, la Raspberry Pi funciona como servidor remoto y la computadora 
 
 ### Esquema de funcionamiento
 
-
+```text
 COMPUTADORA CLIENTE CON LINUX
           |
           | Conexión SSH con X11 Forwarding
@@ -76,9 +70,9 @@ COMPUTADORA CLIENTE CON LINUX
           | La interfaz se redirige mediante SSH
           v
 La ventana se muestra en la computadora cliente
+
 ```
 
----
 ## 5. DIFERENCIA ENTRE XORG Y X11 FORWARDING
 
 Aunque ambos conceptos están relacionados con las aplicaciones gráficas, no cumplen la misma función.
@@ -86,8 +80,6 @@ Aunque ambos conceptos están relacionados con las aplicaciones gráficas, no cu
 **Xorg** es un servidor gráfico que forma parte de la infraestructura gráfica del sistema. Por otro lado, **X11 Forwarding** es una función de SSH que permite transportar la comunicación gráfica de una aplicación remota hasta el cliente.
 
 En esta práctica, el objetivo no fue iniciar un escritorio gráfico completo en la Raspberry Pi. Se buscó ejecutar una aplicación gráfica de manera remota y visualizarla en la computadora cliente a través de SSH.
-
----
 
 ## 6. INSTALACIÓN DE LOS PAQUETES NECESARIOS
 
@@ -97,6 +89,7 @@ Primero se ejecutó:
 
 ```bash
 sudo apt update
+
 ```
 
 Este comando actualiza la información que el sistema utiliza para conocer las versiones disponibles de los paquetes.
@@ -105,6 +98,7 @@ Luego se instalaron los paquetes necesarios:
 
 ```bash
 sudo apt install --no-install-recommends xorg xauth x11-apps
+
 ```
 
 Los componentes instalados cumplen distintas funciones:
@@ -116,8 +110,6 @@ Los componentes instalados cumplen distintas funciones:
 
 Esta instalación se realizó con el objetivo de contar con los componentes requeridos para la actividad, sin agregar deliberadamente un gestor de ventanas ni un entorno de escritorio completo.
 
----
-
 ## 7. CONFIGURACIÓN DEL SERVICIO SSH
 
 Para que SSH permita la redirección de aplicaciones gráficas, es necesario comprobar la configuración del servidor SSH en la Raspberry Pi.
@@ -126,14 +118,16 @@ Se abrió el archivo de configuración con:
 
 ```bash
 sudo nano /etc/ssh/sshd_config
+
 ```
 
-Dentro del archivo se revisaron las directivas relacionadas con X11 Forwarding(que no tengan # al principio):
+Dentro del archivo se revisaron las directivas relacionadas con X11 Forwarding (que no tengan `#` al principio):
 
 ```text
 X11Forwarding yes
 X11DisplayOffset 10
 X11UseLocalhost yes
+
 ```
 
 Estas opciones tienen las siguientes funciones:
@@ -148,9 +142,8 @@ Después de guardar los cambios, se reinició el servicio SSH para aplicar la co
 
 ```bash
 sudo systemctl restart ssh
-```
 
----
+```
 
 ## 8. CONEXIÓN DESDE LA COMPUTADORA CON LINUX
 
@@ -160,16 +153,16 @@ La conexión se estableció mediante el siguiente formato:
 
 ```bash
 ssh -Y usuario@IP_DE_LA_RASPBERRY
+
 ```
 
 Se debe reemplazar `usuario` por el nombre del usuario configurado en la Raspberry Pi y `IP_DE_LA_RASPBERRY` por la dirección IP real del dispositivo.
 
+![Conexión SSH con la opción -Y desde la computadora con Linux](imagenes/ssh-y.png)
+
 La opción `-Y` habilita el reenvío X11 con confianza extendida. Durante nuestras pruebas, esta fue la opción que permitió que la aplicación gráfica funcionara correctamente.
 
-
-**Importante:** la opción `-Y` concede a las aplicaciones gráficas remotas un nivel de confianza mayor que `-X`. Por eso debe utilizarse únicamente cuando se confía en el equipo remoto y en las aplicaciones que se ejecutan en él.
-
----
+> **Nota de seguridad:** la opción `-Y` concede a las aplicaciones gráficas remotas un nivel de confianza mayor que `-X`. Por eso debe utilizarse únicamente cuando se confía en el equipo remoto y en las aplicaciones que se ejecutan en él.
 
 ## 9. COMPROBACIÓN DE LA VARIABLE DISPLAY
 
@@ -177,6 +170,7 @@ Una vez establecida la conexión SSH con reenvío X11, se comprobó el valor de 
 
 ```bash
 echo $DISPLAY
+
 ```
 
 Esta variable indica a las aplicaciones gráficas dónde deben enviar la información de visualización.
@@ -185,13 +179,12 @@ Cuando el reenvío X11 está configurado correctamente, SSH establece automátic
 
 ```text
 localhost:10.0
+
 ```
 
 El número concreto puede variar. Lo importante es que la variable esté definida durante la sesión SSH con reenvío gráfico habilitado.
 
 Esta comprobación permite verificar que la sesión tiene configurado un destino para las aplicaciones gráficas, aunque por sí sola no garantiza que todas las aplicaciones vayan a ejecutarse correctamente.
-
----
 
 ## 10. PRUEBA DE UNA APLICACIÓN GRÁFICA
 
@@ -201,23 +194,28 @@ Se ejecutó:
 
 ```bash
 xeyes
+
 ```
 
 `xeyes` es una aplicación sencilla que muestra una ventana con dos ojos que siguen el movimiento del puntero. Se utiliza como prueba básica de que una aplicación X11 puede abrir una ventana.
 
 La aplicación se ejecutó desde la sesión SSH establecida con la opción `-Y`. El resultado esperado es que la ventana de `xeyes` aparezca en la computadora cliente con Linux, aunque el comando se haya ejecutado en la Raspberry Pi.
 
+![Ventana de xeyes mostrada en la computadora cliente](imagenes/xeyes.png)
+
 También se puede utilizar otra aplicación de prueba del mismo paquete, como:
 
 ```bash
 xclock
+
 ```
 
 `xclock` muestra un reloj en una ventana gráfica.
 
+![Ventana de xclock mostrada en la computadora cliente](imagenes/xclock.png)
+
 Estas aplicaciones sirven para comprobar la redirección gráfica, no para instalar un entorno de escritorio completo.
 
----
 ## 11. VISUALIZACIÓN DE APLICACIONES GRÁFICAS EN EL MONITOR DE LA RASPBERRY PI
 
 Además de mostrar aplicaciones gráficas en la computadora cliente mediante SSH, también es posible ejecutar aplicaciones gráficas directamente en el monitor conectado a la Raspberry Pi.
@@ -230,6 +228,7 @@ Primero se comprobó el valor de la variable de entorno `DISPLAY` mediante el si
 
 ```bash
 echo $DISPLAY
+
 ```
 
 El comando no devolvió ningún valor, lo que indicó que la terminal utilizada no tenía configurado un destino gráfico mediante esa variable.
@@ -241,10 +240,11 @@ Para disponer de las herramientas necesarias para iniciar una sesión gráfica X
 ```bash
 sudo apt update
 sudo apt install xinit x11-xserver-utils
+
 ```
 
-* **`xinit`:** permite iniciar una sesión del sistema gráfico X.
-* **`x11-xserver-utils`:** incluye herramientas auxiliares para trabajar con X11.
+- **`xinit`:** permite iniciar una sesión del sistema gráfico X.
+- **`x11-xserver-utils`:** incluye herramientas auxiliares para trabajar con X11.
 
 Estos paquetes permitieron preparar el inicio de una sesión gráfica mínima, manteniendo el objetivo de no instalar un entorno de escritorio completo.
 
@@ -254,6 +254,7 @@ Una vez instaladas las herramientas, se utilizó el siguiente comando para inici
 
 ```bash
 startx /usr/bin/xclock -- :0
+
 ```
 
 En este comando, `/usr/bin/xclock` indica la ubicación de la aplicación y `:0` identifica la pantalla X local que se desea utilizar.
@@ -270,79 +271,86 @@ De esta manera, se diferencia la ejecución gráfica local de la redirección X1
 
 Existen dos modalidades para mostrar aplicaciones gráficas:
 
-* **Mediante SSH con X11 Forwarding:** la aplicación se ejecuta en la Raspberry Pi, pero la ventana se muestra en la computadora cliente. En nuestras pruebas se utilizó `ssh -Y`.
-* **Mediante una sesión Xorg local:** la aplicación se ejecuta en la Raspberry Pi y su ventana se muestra en el monitor conectado directamente a ella.
+- **Mediante SSH con X11 Forwarding:** la aplicación se ejecuta en la Raspberry Pi, pero la ventana se muestra en la computadora cliente. En nuestras pruebas se utilizó `ssh -Y`.
+- **Mediante una sesión Xorg local:** la aplicación se ejecuta en la Raspberry Pi y su ventana se muestra en el monitor conectado directamente a ella.
 
 Ambas modalidades permiten trabajar con aplicaciones gráficas, pero utilizan diferentes destinos de visualización.
 
 ## 12. COMANDOS UTILIZADOS
 
-### Actualizar la información de paquetes
+A continuación se detalla cada comando ejecutado durante la práctica.
+
+### 1. Actualizar la información de paquetes
 
 ```bash
 sudo apt update
+
 ```
 
 Actualiza los índices de paquetes disponibles.
 
-### Instalar los componentes gráficos y las aplicaciones de prueba
+### 2. Instalar los componentes gráficos y las aplicaciones de prueba
 
 ```bash
 sudo apt install --no-install-recommends xorg xauth x11-apps
+
 ```
 
 Instala los paquetes necesarios para la práctica sin instalar automáticamente los paquetes recomendados.
 
-### Editar la configuración de SSH
+### 3. Editar la configuración de SSH
 
 ```bash
 sudo nano /etc/ssh/sshd_config
+
 ```
 
 Abre el archivo de configuración del servidor SSH.
 
-### Reiniciar SSH
+### 4. Reiniciar SSH
 
 ```bash
 sudo systemctl restart ssh
+
 ```
 
 Reinicia el servicio para aplicar la configuración modificada.
 
-### Conectarse con redirección gráfica
+### 5. Conectarse con redirección gráfica
 
 ```bash
 ssh -Y usuario@IP_DE_LA_RASPBERRY
+
 ```
-![ssh-y](imagenes/ssh-y.png)
+
 Establece una sesión SSH con reenvío X11 de confianza extendida.
 
-### Consultar la variable DISPLAY
+### 6. Consultar la variable DISPLAY
 
 ```bash
 echo $DISPLAY
+
 ```
 
 Permite comprobar el destino gráfico configurado para la sesión remota.
 
-### Ejecutar la aplicación gráfica de prueba
+### 7. Ejecutar la aplicación gráfica de prueba
 
 ```bash
 xeyes
+
 ```
- ![ojos](imagenes/xeyes.png)
+
 Abre una aplicación X11 sencilla para verificar el reenvío gráfico.
 
 Como alternativa:
 
 ```bash
 xclock
+
 ```
-![reloj](imagenes/xclock.png)
 
 Abre una ventana con un reloj.
-
----
 
 ## 13. RESULTADO FINAL
 
@@ -360,8 +368,6 @@ Los puntos principales de la configuración fueron:
 
 De esta forma, se pudo utilizar una aplicación gráfica ejecutada en la Raspberry Pi y visualizar su ventana en la computadora cliente, sin tener que abrir un escritorio completo en la Raspberry Pi.
 
----
-
 ## 14. CONCLUSIÓN
 
 En esta segunda entrega se continuó el trabajo iniciado con la instalación de Raspberry Pi OS Lite y la configuración de SSH. El objetivo fue incorporar los componentes necesarios para ejecutar aplicaciones gráficas de manera remota, manteniendo una instalación mínima y sin instalar un entorno de escritorio ni un gestor de ventanas.
@@ -371,4 +377,3 @@ Para lograrlo, se instalaron Xorg, `xauth` y las aplicaciones de prueba de X11. 
 La conexión se realizó desde una computadora con Linux. Aunque la opción `-X` no funcionó en nuestras pruebas, la opción `-Y` permitió ejecutar la aplicación gráfica y mostrar su ventana en el equipo cliente.
 
 Esta práctica permitió comprender la diferencia entre disponer de un servidor gráfico, instalar un entorno de escritorio y redirigir una aplicación gráfica a través de SSH. Como resultado, la Raspberry Pi puede seguir utilizándose como servidor sin necesidad de contar con un escritorio completo para realizar esta prueba.
-

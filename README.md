@@ -31,4 +31,4 @@ Configuración de entorno de trabajo y redirección de aplicaciones gráficas a 
 
 ### 3.3. Entrega 3: DHCP
 
-**[Ver informe de la Entrega 3](entrega-3/tercera_entrega_DHCP.md)**
+**[Ver informe de la Entrega 3](entrega-3/tercera_entrega_DHCP.MD)**

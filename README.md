@@ -28,3 +28,7 @@ Instalación de Raspberry Pi OS Lite (sin entorno gráfico), asignación de IP l
 **[Ver informe de la Entrega 2](entrega-2/Segunda_Entrega_Xorg_X11_Forwarding.md)**
 
 Configuración de entorno de trabajo y redirección de aplicaciones gráficas a través de X11.
+
+### 3.3. Entrega 3: DHCP
+
+**[Ver informe de la Entrega 3](entrega-3/tercera_entrega_DHCP.md)**

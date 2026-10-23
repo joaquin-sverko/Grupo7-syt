@@ -582,7 +582,7 @@ A partir de ese momento la Raspberry Pi debe ser accesible mediante:
 ```text
 192.168.7.1
 ```
-
+![ping 1](imagenes/ping-gino.png)
 ---
 
 ## 18. CONEXIÓN FÍSICA DE LA RED
@@ -643,11 +643,6 @@ Active: active (running)
 
 Esto indica que el servidor DHCP está ejecutándose correctamente.
 
-> **Imagen:** agregar captura del estado del servicio.
-
-```markdown
-![Estado del servicio DHCP](imagenes/status-dhcp.png)
-```
 
 ---
 
@@ -707,13 +702,13 @@ Por ejemplo:
 IPv4 Address:     192.168.7.100
 Subnet Mask:      255.255.255.0
 ```
-
+![ip config 1](imagenes/ip-config-gino.png)
 Otra computadora podría recibir:
 
 ```text
 192.168.7.101
 ```
-
+![ip config 2](imagenes/ip-config-joaco.png)
 El número concreto dependerá de las direcciones disponibles y de las concesiones existentes.
 
 ---
@@ -725,7 +720,7 @@ Una vez que una computadora recibe correctamente una dirección IP, se puede com
 ```bash
 ping 192.168.7.1
 ```
-
+![ping ](imagenes/ping-joaco.png)
 Si la configuración es correcta, la Raspberry Pi debe responder.
 
 Esto demuestra que ambos dispositivos:
@@ -781,7 +776,7 @@ Esta comprobación permite verificar que el servidor DHCP efectivamente ha entre
 > **Imagen:** agregar captura donde se observen las concesiones realizadas.
 
 ```markdown
-![Concesiones realizadas por el servidor DHCP](imagenes/dhcp-leases.png)
+![Concesiones realizadas por el servidor DHCP](imagenes/sudo.png)
 ```
 
 ---
@@ -797,6 +792,8 @@ sudo journalctl -u isc-dhcp-server
 Este comando permite visualizar los registros asociados al servicio.
 
 Los logs resultan especialmente útiles para diagnosticar errores y comprobar solicitudes realizadas por los clientes.
+
+![Consultar registros de servicios](imagenes/journal.png)
 
 ---
 

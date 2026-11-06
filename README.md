@@ -32,3 +32,12 @@ Configuración de entorno de trabajo y redirección de aplicaciones gráficas a 
 ### 3.3. Entrega 3: DHCP
 
 **[Ver informe de la Entrega 3](entrega-3/tercera_entrega_DHCP.MD)**
+
+
+Ampliacion de la funcionalidad de la raspberry pi para que funcione como un servidor DHCP, asignando direcciones IP
+
+### 3.4. Entrega 4: FTP
+
+**[Ver informe de la Entrega 4](/entrega-4/Cuarta_Entrega_FTP_Raspberry_Pi%20(1).md)**
+
+Instalación y configuración de un servidor FTP (vsftpd) en la Raspberry Pi, permitiendo subir y descargar archivos desde las computadoras de la red LAN mediante la interfaz gráfica de FileZilla.

@@ -41,3 +41,9 @@ Ampliacion de la funcionalidad de la raspberry pi para que funcione como un serv
 **[Ver informe de la Entrega 4](/entrega-4/Cuarta_Entrega_FTP_Raspberry_Pi%20(1).md)**
 
 Instalación y configuración de un servidor FTP (vsftpd) en la Raspberry Pi, permitiendo subir y descargar archivos desde las computadoras de la red LAN mediante la interfaz gráfica de FileZilla.
+
+### 3.5. Entrega 5: Internet - DNS
+
+**[Ver informe de la Entrega 5](/entrega-5/Quinta_Entrega_Grupo7_Informe_Corregido.md)**
+
+Configuración de la raspberry para que funcione como un router, asi pudiendo proveer red wifi a diversos dispositivos.

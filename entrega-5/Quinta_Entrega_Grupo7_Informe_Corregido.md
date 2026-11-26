@@ -39,19 +39,65 @@ La conexión Bluetooth PAN (*Personal Area Network*) permite utilizar el teléfo
 
 El trabajo no consiste en conectarse al Wi-Fi del iPhone: la Raspberry obtiene Internet **por Bluetooth**, y luego lo comparte **por Wi-Fi**.
 
-## 3. PREPARACIÓN DEL IPHONE
+## 3. TEORIA
+
+### 3.1. Internet y funcionamiento de un router
+
+Un **router** es un dispositivo que permite conectar diferentes redes y dirigir los paquetes de información entre ellas. Generalmente, los routers que utilizamos en nuestras casas reciben Internet de un proveedor y lo distribuyen a otros dispositivos mediante conexiones por cable o Wi-Fi.
+
+En esta práctica utilizamos la **Raspberry Pi 3 como un router**, recibiendo Internet desde un iPhone por Bluetooth y compartiéndolo mediante una red Wi-Fi creada por nosotros. Para lograrlo, configuramos las interfaces de red y habilitamos las funciones necesarias para permitir el intercambio de datos.
+
+### 3.2. Bluetooth y conexión PAN
+
+**Bluetooth** es una tecnología inalámbrica que permite conectar dispositivos cercanos sin necesidad de utilizar cables. Además de transferir archivos o conectar accesorios, también puede utilizarse para compartir una conexión a Internet.
+
+Para esto se utiliza una conexión **PAN (Personal Area Network)**, que permite establecer una pequeña red entre dispositivos mediante Bluetooth.
+
+En nuestro caso, el iPhone compartió sus datos móviles con la Raspberry Pi. Al establecer la conexión, se creó la interfaz de red **`bnep0`**, que recibió la dirección IP `172.20.10.2`, mientras que el iPhone utilizó `172.20.10.1` como puerta de enlace.
+
+De esta manera, la Raspberry pudo acceder a Internet sin conectarse directamente a una red Wi-Fi.
+
+
+
+### 3.3. Enrutamiento IP y NAT
+
+El **enrutamiento IP** es el proceso que permite enviar paquetes de información de una red hacia otra. Para que la Raspberry pueda realizar esta función, se habilitó el reenvío de paquetes mediante la configuración:
+
+`net.ipv4.ip_forward=1`
+
+Por otro lado, **NAT (Network Address Translation)** es un mecanismo que permite que varios dispositivos de una red privada compartan una misma conexión de salida a Internet.
+
+En nuestra práctica utilizamos NAT mediante **MASQUERADE**, que reemplaza la dirección IP de origen de los paquetes por la dirección correspondiente a la conexión de salida.
+
+Al configurar el hotspot en modo `Shared`, NetworkManager creó automáticamente las reglas NAT necesarias para que los dispositivos conectados a `Grupo7_2026` pudieran utilizar el Internet recibido por Bluetooth.
+
+### 3.4. DNS y punto de acceso Wi-Fi
+
+**DNS (Domain Name System)** es el sistema encargado de traducir los nombres de dominio, como `google.com`, a direcciones IP que las computadoras utilizan para comunicarse.
+
+Gracias a DNS podemos ingresar a una página utilizando su nombre, sin necesidad de conocer la dirección IP del servidor.
+
+Por otra parte, un **punto de acceso Wi-Fi (Access Point o AP)** permite crear una red inalámbrica a la que pueden conectarse otros dispositivos.
+
+En nuestro caso configuramos la interfaz **`wlan0`** de la Raspberry para que funcionara como punto de acceso, utilizando NetworkManager y creando la red **`Grupo7_2026`**, protegida mediante una contraseña WPA2.
+
+La red Wi-Fi utilizó una subred diferente a la de Ethernet. Además, NetworkManager administró automáticamente la asignación de direcciones IP, los parámetros DNS y las reglas necesarias para compartir Internet.
+
+Finalmente, comprobamos el funcionamiento conectando otro celular a `Grupo7_2026` y navegando por Internet mediante la conexión Bluetooth que la Raspberry recibía del iPhone.
+
+## 4. PREPARACIÓN DEL IPHONE
 
 Antes de configurar la Raspberry, preparamos el iPhone que usaríamos como fuente de Internet:
 
 1. Activamos los **datos móviles**.
-2. Encendimos **Bluetooth**.
+2. Encendimos **Bluetooth**.       
 3. Entramos en **Configuración > Compartir Internet**.
 4. Habilitamos **Permitir a otros conectarse**.
 5. Mantuvimos el teléfono disponible para realizar el emparejamiento.
 
 Para la prueba final utilizamos **otro celular** distinto del que compartía los datos móviles.
 
-## 4. EMPAREJAMIENTO DEL IPHONE MEDIANTE BLUETOOTH
+## 5. EMPAREJAMIENTO DEL IPHONE MEDIANTE BLUETOOTH
 
 En la terminal de la Raspberry abrimos la herramienta de administración Bluetooth:
 
@@ -95,7 +141,7 @@ exit
 
 Con este paso logramos **vincular el iPhone a la Raspberry**. Sin embargo, el emparejamiento por sí solo no proporciona Internet: todavía había que activar la conexión de red del teléfono.
 
-## 5. CONEXIÓN A INTERNET POR BLUETOOTH
+## 6. CONEXIÓN A INTERNET POR BLUETOOTH
 
 Para activar la conexión de red utilizamos la interfaz de texto de NetworkManager:
 
@@ -131,7 +177,7 @@ ping -c 4 8.8.8.8
 
 Recibimos respuestas a los cuatro paquetes. De esta manera confirmamos que la Raspberry tenía Internet **antes** de configurar el hotspot.
 
-## 6. CREACIÓN DEL HOTSPOT WI-FI
+## 7. CREACIÓN DEL HOTSPOT WI-FI
 
 El siguiente objetivo fue convertir la interfaz Wi-Fi de la Raspberry en un punto de acceso para otros equipos.
 
@@ -188,7 +234,7 @@ sudo nmcli connection up "Hotspot Grupo7"
 
 NetworkManager confirmó que la conexión se había activado. A partir de ese momento, otros dispositivos pudieron encontrar la red **`Grupo7_2026`**.
 
-## 7. CÓMO SE COMPARTE INTERNET: DHCP, DNS, NAT Y ENRUTAMIENTO
+## 8. CÓMO SE COMPARTE INTERNET: DHCP, DNS, NAT Y ENRUTAMIENTO
 
 Crear una red Wi-Fi no alcanza para proporcionar Internet. Los clientes también necesitan una dirección IP, una puerta de enlace y la posibilidad de enviar su tráfico hacia la conexión Bluetooth.
 
@@ -243,7 +289,7 @@ ip saddr 10.42.0.0/24 ip daddr != 10.42.0.0/24 masquerade
 
 Esto muestra que NetworkManager configuró el NAT para la red Wi-Fi. 
 
-## 8. CONFIGURACIÓN PARA QUE SE ACTIVE AL ENCENDER LA RASPBERRY
+## 9. CONFIGURACIÓN PARA QUE SE ACTIVE AL ENCENDER LA RASPBERRY
 
 Una vez que pudimos conectarnos al hotspot y navegar, dejamos configurado el inicio automático de los perfiles utilizados.
 
@@ -265,7 +311,7 @@ De esta manera, NetworkManager puede intentar recuperar la conexión Bluetooth c
 
 El modo `Shared` también permite que NetworkManager vuelva a generar las reglas necesarias para compartir Internet al activar el hotspot.
 
-## 9. COMPROBACIONES FINALES
+## 10. COMPROBACIONES FINALES
 
 Con Bluetooth y el hotspot funcionando al mismo tiempo, revisamos el estado de las conexiones:
 
@@ -298,7 +344,7 @@ sudo reboot
 
 Después del reinicio comprobamos que las conexiones volvieran a estar disponibles y que el celular pudiera navegar nuevamente por **`Grupo7_2026`**. Así verificamos que la configuración utilizada para el TP se mantenía.
 
-## 10. CONCLUSIÓN
+## 11. CONCLUSIÓN
 
 En esta entrega logramos que la Raspberry Pi 3 **recibiera Internet mediante Bluetooth desde un iPhone y lo compartiera mediante una red Wi-Fi propia**. La conexión de entrada se realizó por `bnep0`, mientras que `wlan0` funcionó como punto de acceso con el nombre `Grupo7_2026`.
 

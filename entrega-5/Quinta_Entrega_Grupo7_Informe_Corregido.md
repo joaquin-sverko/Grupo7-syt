@@ -167,7 +167,6 @@ En nuestra práctica obtuvimos una ruta como esta:
 
 Esto indica que el tráfico hacia Internet se envía por **`bnep0`**, utilizando como puerta de enlace al iPhone (`172.20.10.1`). La dirección `172.20.10.2` fue asignada a la Raspberry en esa conexión. Estos valores pueden cambiar de un teléfono a otro.
 
-![Conexiones y acceso a Internet](/entrega-5/imagenes/acceso%20a%20internet.jpeg)
 
 Comprobamos que realmente había Internet ejecutando:
 
@@ -176,7 +175,7 @@ ping -c 4 8.8.8.8
 ```
 
 Recibimos respuestas a los cuatro paquetes. De esta manera confirmamos que la Raspberry tenía Internet **antes** de configurar el hotspot.
-
+![Conexiones y acceso a Internet](/entrega-5/imagenes/acceso%20a%20internet.jpeg)
 ## 7. CREACIÓN DEL HOTSPOT WI-FI
 
 El siguiente objetivo fue convertir la interfaz Wi-Fi de la Raspberry en un punto de acceso para otros equipos.
